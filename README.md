@@ -13,8 +13,9 @@ This is for keeping a simple inventory of a drugstore.
 
 ## To Do.
 
--   [ ] Sync firebase to google spreadsheets;
--   [ ] Make it available as an app in Android OS
+-   [ ] Sync firebase to google spreadsheets.
+-   [ ] Make it available as an app in Android OS.
+-   [ ] Add styles.
 
 ## To Fix.
 
