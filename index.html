@@ -12,20 +12,31 @@
     <body>
         <form action="">
             <select name="categoria" id="categoria">
+                <option value="inicial" disabled selected>Elija un producto</option>
                 <option value="vinos">Vinos</option>
                 <option value="tabaco">Tabaco</option>
                 <option value="chocolates">Chocolates</option>
             </select>
             <label for="item"></label>
-            <input type="text" name="item" id="newItem" placeholder="Add new Item" />
+            <input type="text" name="item" id="nuevoItem" placeholder="Add new Item" />
             <input type="number" name="precio" id="precio" />
-            <button id="newItemBTN">Add new item</button>
+            <button id="nuevoItemBTN">Add new item</button>
         </form>
 
         <div class="container">
             <a href="#" class="displayData">vinos</a>
             <a href="#" class="displayData">tabaco</a>
             <a href="#" class="displayData">chocolates</a>
+
+            <div id="listContainer">
+                <table>
+                    <thead>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
         </div>
         <script src="script.js"></script>
     </body>
