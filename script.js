@@ -13,29 +13,66 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     let db = firebase.database();
+
+    let categorias = document.getElementById("categoria");
     let ref;
 
-    // get item data and submit to db
-
-    let category = document.getElementById("categoria");
-    let item = document.getElementById("newItem");
-    let precio = document.getElementById("precio");
-    let itemBTN = document.getElementById("newItemBTN");
-
-    itemBTN.addEventListener("click", () => {
-        if (category.value === "vinos") {
-            ref = db.ref("vinos");
-        } else if (category.value === "tabaco") {
-            ref = db.ref("tabaco");
-        } else if (category.value === "chocolates") {
-            ref = db.ref("chocolates");
+    categorias.addEventListener("input", () => {
+        //categorias.value != "inicial" ? (ref = db.ref(`${categorias.value}`)) : alert("elija una categoria");
+        if (categorias.value != "inicial") {
+            ref = db.ref(`${categorias.value}`);
+        } else if (categorias.value === "inicial") {
+            alert("elija una categoria");
         }
+    });
 
+    let getItem = document.getElementById("nuevoItem");
+    let getPrice = document.getElementById("precio");
+    let getBTN = document.getElementById("nuevoItemBTN");
+
+    getBTN.addEventListener("click", () => {
         let data = {
-            producto: `${item.value}`,
-            precio: `$${precio.value}`
+            producto: `${getItem.value}`,
+            precio: `$${getPrice.value}`
         };
 
         ref.push(data);
     });
+
+    let displayData = document.getElementsByClassName("displayData");
+    let keys = Object.keys(displayData);
+
+    for (let i = 0; i < keys.length; i++) {
+        let k = keys[i];
+        displayData[k].addEventListener("click", testData);
+    }
+
+    function testData(event) {
+        ref = db.ref(`${event.target.textContent}`);
+        ref.on("value", showData);
+    }
+
+    function showData(data) {
+        let dataValues = data.val();
+        let keys = Object.keys(dataValues);
+        console.log(keys);
+
+        for (let i = 0; i < keys.length; i++) {
+            let row = document.createElement("tr");
+            let item = document.createElement("td");
+            let price = document.createElement("td");
+            let itemName = document.createTextNode(dataValues[keys[i]].producto);
+            let itemPrice = document.createTextNode(dataValues[keys[i]].precio);
+
+            let table = document.getElementById("tableBody");
+
+            item.appendChild(itemName);
+            price.appendChild(itemPrice);
+            row.appendChild(item);
+            row.appendChild(price);
+            table.appendChild(row);
+
+            console.log(dataValues[keys[i]]);
+        }
+    }
 });
