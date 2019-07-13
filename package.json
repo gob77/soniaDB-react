@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/gob77/fb-js-soniaDB1518#readme",
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "firebase": "^6.2.4"
   }

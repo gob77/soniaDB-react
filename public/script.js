@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        let k = Object.keys(data);
         if (tbody.innerText === "") {
             test();
         } else {
