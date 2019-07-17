@@ -19,25 +19,40 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
+const ref = db.ref("producto");
+
 app.listen(5000, () => {
     console.log("listening at 5000");
 });
 
 app.use(express.static("public"));
 
-app.post("/save/:data", (request, response) => {
-    //console.log(request.params);
-    let data = request.params.data.split(",");
-    let [ref, item, precio] = [data[0], data[1], data[2]];
-    console.log(ref, item, precio);
+app.get("/main", (request, response) => {
+    db.ref().once("value", data => {
+        response.json({
+            status: "success",
+            info: data.val()
+        });
+    });
+});
 
-    db.ref(`${ref}`).push({
+app.post("/save/:data", (request, response) => {
+    let data = request.params.data.split(",");
+    let [producto, item, precio, cantidad] = [data[0], data[1], data[2], data[3]];
+    console.log(ref, item, precio, cantidad);
+
+    ref.push({
+        producto: producto,
         item: item,
-        precio: precio
+        precio: precio,
+        cantidad: cantidad
     });
 
-    response.json({
-        status: "success"
+    db.ref().once("value", data => {
+        response.json({
+            status: "success",
+            info: data.val()
+        });
     });
 });
 
