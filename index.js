@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 
 const firebase = require("firebase");
 
@@ -26,6 +27,7 @@ app.listen(5000, () => {
 });
 
 app.use(express.static("public"));
+app.use(bodyParser.json());
 
 app.get("/main", (request, response) => {
     db.ref().once("value", data => {
@@ -39,7 +41,7 @@ app.get("/main", (request, response) => {
 app.post("/save/:data", (request, response) => {
     let data = request.params.data.split(",");
     let [producto, item, precio, cantidad] = [data[0], data[1], data[2], data[3]];
-    console.log(ref, item, precio, cantidad);
+    console.log(producto, item, precio, cantidad);
 
     ref.push({
         producto: producto,
@@ -48,7 +50,16 @@ app.post("/save/:data", (request, response) => {
         cantidad: cantidad
     });
 
-    db.ref().once("value", data => {
+    /* db.ref().once("value", data => {
+        response.json({
+            status: "success",
+            info: data.val()
+        });
+    });
+
+    console.log(err); */
+
+    ref.once("child_added", data => {
         response.json({
             status: "success",
             info: data.val()

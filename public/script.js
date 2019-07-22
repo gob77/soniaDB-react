@@ -1,54 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const table = document.getElementById("table");
+
+    const dataStore = {
+        productos: [],
+        items: []
+    };
+
     async function getInfo() {
         const api_url = "/main";
         const fetch_data = await fetch(api_url);
         const json_data = await fetch_data.json();
-        printData(json_data.info);
-    }
 
-    getInfo();
+        let data = json_data.info.producto;
+        let len = Object.keys(data);
+        let _temp = [];
 
-    function printData(data) {
-        const info = data.producto;
-        const table = document.getElementById("table");
+        for (let i = 0; i < len.length; i++) {
+            let producto = data[len[i]];
+            _temp.push(producto.producto);
+            dataStore.items.push(producto);
+        }
 
-        let _temp;
-        let thead, th, tbody;
+        dataStore.productos.push(...new Set(_temp));
+        dataStore.productos.map(index => {
+            let thead = document.createElement("thead");
+            let tbody = document.createElement("tbody");
+            let th = document.createElement("th");
+            let thTXT = document.createTextNode(index);
 
-        Object.keys(info).map(index => {
-            if (info[index].producto != _temp) {
-                _temp = info[index].producto;
+            th.setAttribute("class", "bg-secondary text-uppercase text-center");
+            th.setAttribute("colspan", "3");
+            tbody.setAttribute("id", index);
 
-                thead = document.createElement("thead");
-                tbody = document.createElement("tbody");
-                th = document.createElement("th");
+            th.append(thTXT);
+            thead.append(th);
+            table.append(thead, tbody);
+        });
 
-                let thTXT = document.createTextNode(info[index].producto);
+        let productosID;
 
-                th.setAttribute("colspan", "3");
-                th.setAttribute("class", "bg-secondary text-uppercase text-center");
-
-                th.append(thTXT);
-                thead.append(th);
-                table.append(thead, tbody);
-            }
+        dataStore.items.map(index => {
+            productosID = document.getElementById(index.producto);
 
             let tr = document.createElement("tr");
-
             let itemTD = document.createElement("td");
             let precioTD = document.createElement("td");
             let cantidadTD = document.createElement("td");
 
-            let itemTXT = document.createTextNode(info[index].item);
-            let precioTXT = document.createTextNode(info[index].precio);
-            let cantidadTXT = document.createTextNode(info[index].cantidad);
+            let itemTXT = document.createTextNode(index.item);
+            let precioTXT = document.createTextNode(index.precio);
+            let cantidadTXT = document.createTextNode(index.cantidad);
 
             itemTD.append(itemTXT);
             precioTD.append(precioTXT);
             cantidadTD.append(cantidadTXT);
 
             tr.append(itemTD, precioTD, cantidadTD);
-            tbody.append(tr);
+            productosID.append(tr);
         });
     }
 
@@ -77,12 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(data)
             };
 
-            let api_url = `/save/${data.producto},${data.item}, ${data.precio}, ${data.cantidad}`;
+            let api_url = `/save/${data.producto},${data.item},${data.precio},${data.cantidad}`;
             let post_data = await fetch(api_url, options);
             let data_json = await post_data.json();
-            console.log(data_json.status);
+            console.log("executing printDAta");
+            getInfo(data_json.info);
         }
-        getInfo();
     });
 
     let displayData = document.getElementsByClassName("displayData");
@@ -135,4 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.append(tr);
         table.append(tbody);
     }
+
+    getInfo();
 });
