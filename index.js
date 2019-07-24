@@ -50,15 +50,6 @@ app.post("/save/:data", (request, response) => {
         cantidad: cantidad
     });
 
-    /* db.ref().once("value", data => {
-        response.json({
-            status: "success",
-            info: data.val()
-        });
-    });
-
-    console.log(err); */
-
     ref.once("child_added", data => {
         response.json({
             status: "success",
