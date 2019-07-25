@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         items: []
     };
 
-    console.log(dataStore);
+    //console.log(dataStore);
     async function getInfo() {
         const api_url = "/main";
         const fetch_data = await fetch(api_url);
@@ -151,9 +151,17 @@ document.addEventListener("DOMContentLoaded", () => {
             let post_data = await fetch(api_url, options);
             let data_json = await post_data.json();
 
-            console.log(data_json);
-            dataStore.items.push(data_json.info);
-            newRow();
+            //console.log(data_json);
+
+            if (data_json.status) {
+                console.log("success");
+                console.log(data_json.info);
+                dataStore.items.push(data_json.info);
+                newRow();
+            } else {
+                console.log("failed");
+                console.log(data_json.info);
+            }
         }
     });
 
@@ -176,5 +184,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     getInfo();
-    console.log(dataStore);
+    //console.log(dataStore);
 });

@@ -41,21 +41,41 @@ app.get("/main", (request, response) => {
 app.post("/save/:data", (request, response) => {
     let data = request.params.data.split(",");
     let [producto, item, precio, cantidad] = [data[0], data[1], data[2], data[3]];
-    console.log(producto, item, precio, cantidad);
+    //console.log(producto, item, precio, cantidad);
 
-    ref.push({
-        producto: producto,
-        item: item,
-        precio: precio,
-        cantidad: cantidad
-    });
-
-    ref.once("child_added", data => {
+    /* ref.once("child_added", data => {
         response.json({
             status: "success",
             info: data.val()
+    }); */
+
+    ref.orderByChild("item")
+        .equalTo(`${item}`)
+        .once("value", data => {
+            if (data.exists()) {
+                console.log(data.val());
+                response.json({
+                    status: false,
+                    info: data.val()
+                });
+            } else {
+                console.log("el item no esta en la db");
+                console.log(data.val());
+                ref.push({
+                    producto: producto,
+                    item: item,
+                    precio: precio,
+                    cantidad: cantidad
+                });
+
+                ref.once("child_added", data => {
+                    response.json({
+                        status: true,
+                        info: data.val()
+                    });
+                });
+            }
         });
-    });
 });
 
 app.get("/showdata/:data", (request, response) => {
