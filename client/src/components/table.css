@@ -1,0 +1,15 @@
+.btn-group {
+    margin-top: 50px;
+}
+
+table {
+    margin-top: 20px;
+}
+tbody {
+    border: 2px solir white !important;
+}
+
+td:first-of-type {
+    border-right: 1px solid white !important;
+    text-transform: capitalize !important;
+}

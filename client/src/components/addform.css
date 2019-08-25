@@ -1,0 +1,25 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    margin: 5px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn-container button {
+    width: 50%;
+    margin: 5px !important;
+}
+
+form {
+    margin-bottom: 20px;
+}

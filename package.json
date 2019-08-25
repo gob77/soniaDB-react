@@ -1,29 +1,32 @@
 {
-  "name": "soniadb1518",
-  "version": "1.0.0",
-  "description": "database for drugstore products",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gob77/fb-js-soniaDB1518.git"
-  },
-  "keywords": [
-    "database",
-    "products",
-    "drugstore"
-  ],
-  "author": "Mauricio Ortiz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gob77/fb-js-soniaDB1518/issues"
-  },
-  "homepage": "https://github.com/gob77/fb-js-soniaDB1518#readme",
-  "dependencies": {
-    "bootstrap": "^4.3.1",
-    "express": "^4.17.1",
-    "firebase": "^6.2.4"
-  }
+    "name": "soniadb1518",
+    "version": "1.0.0",
+    "description": "react and express",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "server": "nodemon server.js --ignore client",
+        "client": "npm start --prefix client",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "author": "Mauricio Ortiz",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gob77/fb-js-soniaDB1518.git"
+    },
+    "bugs": {
+        "url": "https://github.com/gob77/fb-js-soniaDB1518/issues"
+    },
+    "homepage": "https://github.com/gob77/fb-js-soniaDB1518#readme",
+    "dependencies": {
+        "compression": "^1.7.4",
+        "concurrently": "^4.1.1",
+        "express": "^4.17.1",
+        "firebase": "^6.3.4",
+        "re-base": "^4.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.1"
+    }
 }
