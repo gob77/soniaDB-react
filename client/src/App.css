@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(204, 204, 202) !important;
+    /* background-color: rgb(204, 204, 202) !important; */
+    background-color: red;
 }
 
 .App {
