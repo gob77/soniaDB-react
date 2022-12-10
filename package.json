@@ -22,7 +22,7 @@
     "dependencies": {
         "compression": "^1.7.4",
         "concurrently": "^4.1.1",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "firebase": "^6.3.4",
         "re-base": "^4.0.0"
     },
